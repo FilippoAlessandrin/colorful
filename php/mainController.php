@@ -7,7 +7,7 @@
         }
       
         elseif($_POST["typerequest"]=="deletecolor"){
-            $colore=$_POST["colore"];
+            $colore=$_POST["id"];
             echo deleteColoreRequest($colore);
         }elseif($_POST["typerequest"]=="addColor"){
             $hex=$_POST["hex"];
@@ -16,15 +16,24 @@
             $blue=$_POST["blue"];
             insertColoreRequest($hex,$red,$green,$blue);
         }elseif($_POST["typerequest"]=="modifyColorList"){
-            header("Location: ../modifica.php");
-       
-        }elseif($_POST["typerequest"]=="modifyColor"){
-            $hex=$_POST["hex"];
-            $arrayColore=selectColoreRequest($hex);
+           
+            $id=$_POST["id"];
+            $arrayColore=selectColoreRequest($id);
+            $hex=$arrayColore['HEX'];
             $red=$arrayColore['red'];
             $green=$arrayColore['green'];
             $blue=$arrayColore['blue'];
-            modifyColoreRequest($hex,$red,$green,$blue);
+
+            header("Location: ../modifica.php?id=$id&hex=$hex&red=$red&green=$green&blue=$blue");
+       
+        }elseif($_POST["typerequest"]=="modifyColor"){
+            $id=$_POST["id"];
+            $hex=$_POST["hex"];
+            $red=$_POST["red"];
+            $green=$_POST["green"];
+            $blue=$_POST["blue"];
+       
+            echo modifyColoreRequest($id,$hex,$red,$green,$blue);
         }
     }
     if(isset($_GET["typerequest"])){
@@ -87,10 +96,10 @@
     function selectColoriRequest(){
         return selectColori();
     }
-    function selectColoreRequest($colore){
-        return selectColore($colore);
+    function selectColoreRequest($id){
+        return selectColore($id);
     }
-    function modifyColoreRequest($hex,$red,$green,$blue){
-        return modifyColore($hex,$red,$green,$blue);
+    function modifyColoreRequest($id,$hex,$red,$green,$blue){
+        return modifyColore($id,$hex,$red,$green,$blue);
     }
 ?>

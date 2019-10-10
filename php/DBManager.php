@@ -10,15 +10,15 @@
     function selectColori(){
         $arrayColori=[];
         $db=connDB();
-        $stmt = $db->prepare("select HEX from color");
+        $stmt = $db->prepare("select * from color");
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    function selectColore($colore){
+    function selectColore($id){
         $arrayColori=[];
        $db=connDB();
-        $stmt = $db->prepare("select * from color WHERE HEX='$colore'");
+        $stmt = $db->prepare("select * from color WHERE id='$id'");
 
         $stmt->execute();
         
@@ -34,10 +34,10 @@
          return $stmt->fetch(PDO::FETCH_ASSOC);
 
     }
-    function deleteColore($colore){
+    function deleteColore($id){
         $db=connDB();
-        $stmt = $db->prepare("delete from color where HEX='$colore'");
-    
+        $stmt = $db->prepare("delete from color where id='$id'");
+        
         $stmt->execute();
         return $stmt->rowCount();
     }
@@ -48,11 +48,11 @@
         $stmt->execute([$hex,$red,$green,$blue]);
         return $stmt->rowCount();
     }
-    function modifyColore($hex,$red,$green,$blue){
+    function modifyColore($id,$hex,$red,$green,$blue){
         $db=connDB();
-        $stmt = $db->prepare("update color set HEX=?,red=?,green=?,blue=?");
-    
-        $stmt->execute([$hex,$red,$green,$blue]);
+        $stmt = $db->prepare("update color set HEX=?,red=?,green=?,blue=? where id=?");
+       
+        $stmt->execute([$hex,$red,$green,$blue,$id]);
         return $stmt->rowCount();
     }
 ?>

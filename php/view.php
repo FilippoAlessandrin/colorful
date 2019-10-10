@@ -16,7 +16,8 @@
         $arrayColori=selectColoriRequest();
         foreach($arrayColori as $colore){
             $hex=$colore["HEX"];
-            echo "<input type='radio' name='colore' value='$hex'><p style='background-color:#$hex'>#$hex</p><br>";
+            $id=$colore["id"];
+            echo "<input type='radio' name='id' value='$id'><p style='background-color:#$hex'>#$hex</p><br>";
         }
         if(count($arrayColori)==0){
             echo "non ci sono colori disponibili";
